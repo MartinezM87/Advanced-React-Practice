@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import axios from "axios";
 import './App.css';
+import PlayerCard from "./components/PlayerCard.js";
 
 class App extends Component {
-  constructor(){
+  constructor() {
     super();
     this.state = {
       players: []
@@ -13,28 +14,30 @@ class App extends Component {
 
   object = {
     practice: {
-      number:1
+      number: 1
     }
   };
 
 
-  componentDidMount(){
+  componentDidMount() {
     axios.get('http://localhost:5000/api/footballers')
-    .then(res => {
-      this.setState({players: res.data});
-      console.table(res.data);
-      console.log(Array.isArray(this.state.players));
-    })
-    .catch()
+      .then(res => {
+        this.setState({ players: res.data });
+      })
+      .catch()
   }
 
 
-    render(){
+  render() {
     return (
-    <div className="App">
-      <h1>Happy building <span role="img" aria-label="Smiling emoji">😃</span></h1>
-    </div>
-  );
-}}
+      <div className="App">
+        <h1>Happy building <span role="img" aria-label="Smiling emoji">😃</span></h1>
+      {this.state.players.map(player => (
+        <PlayerCard key={player.id} player = {player} />
+      ))}
+      </div>
+    );
+  }
+}
 
 export default App;
